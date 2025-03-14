@@ -1,21 +1,29 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 // Define the Dashboard component
-// The Dashboard component displays a welcome message based on the user's role.
-const Dashboard:React.FC = () => {
-    const { user } = useAuth();
+const Dashboard: React.FC = () => {
+    const auth = useAuth();
 
-    // If the user is not loaded yet, display a loading message
-    if (!user) return <p>Loading...</p>;
+    // Handle case where AuthContext is not available
+    if (!auth) {
+        console.error("Dashboard must be used within an AuthProvider.");
+        return <Navigate to="/login" />;
+    }
 
-    // Display a welcome message based on the user's role
+    const { user } = auth;
+
+    // If user is not authenticated, redirect to login
+    if (!user) return <Navigate to="/login" />;
+
     return (
         <div>
             <h1>Dashboard</h1>
-            {user.role === "Admin" && <p>Welcome, Admin! Here are your controls.</p>}
-            {user.role === "Editor" && <p>Welcome, Editor! Here is your content panel.</p>}
-            {user.role === "Viewer" && <p>Welcome, Viewer! Here are your reports.</p>}
+            <p>Welcome, {user.username}!</p>
+            {user.role === "Admin" && <p>Here are your admin controls.</p>}
+            {user.role === "Editor" && <p>Here is your content panel.</p>}
+            {user.role === "Viewer" && <p>Here are your reports.</p>}
         </div>
     );
 };
