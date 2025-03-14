@@ -2,21 +2,25 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// Define the ProtectedRouteProps interface
 interface ProtectedRouteProps {
     children: React.ReactNode;
 }
 
-// Define the ProtectedRoute component
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const { isAuthenticated } = useAuth();
+    const auth = useAuth();
 
-    // If the user is not authenticated, redirect to the login page
-    if (!isAuthenticated) {
+    // If auth context is not available, redirect to login
+    if (!auth) {
+        console.error("ProtectedRoute must be used within an AuthProvider.");
         return <Navigate to="/login" />;
     }
-    // If the user is authenticated, render the children
-    return <>{children}</>;
+
+    // If the user is not authenticated, redirect to login
+    if (!auth.isAuthenticated) {
+        return <Navigate to="/login" />;
+    }
+
+    return children;
 };
 
 export default ProtectedRoute;
