@@ -10,39 +10,59 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-    if (!username || !email){
-        alert("Please enter your username and email.");
-        return;
-    }
+        if (!username || !email) {
+            alert("Please enter your username and email.");
+            return;
+        }
         login({ username, email, role });
         navigate("/dashboard");
     };
 
     return (
         <div className='login-container'>
-
             <h1 className='login-title'>Login</h1>
             <p className='Dep'>Enter your login details</p>
             <div className='login-form'>
-
                 <label className='label'>Username:</label><br />
-                <input type="text" placeholder="Username" className='input-field' value={username} onChange={(e) => setUsername(e.target.value)} />br
+                <input 
+                    type="text" 
+                    placeholder="Username" 
+                    className='input-field' 
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)} 
+                />
+                <br />
+
                 <label className='label'>Email:</label><br />
-                <input type="email" placeholder="Email" className='input-field' value={email} onChange={(e) => setEmail(e.target.value)} />br
-                
+                <input 
+                    type="email" 
+                    placeholder="Email" 
+                    className='input-field' 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                />
+                <br />
+
                 <label>Role:</label>
-                <select value={role} onChange={(e) => setRole(e.target.value as "Admin" | "Editor" | "Viewer")}>
+                <select 
+                    value={role} 
+                    onChange={(e) => {
+                        const selectedRole = e.target.value as "Admin" | "Editor" | "Viewer";
+                        if (["Admin", "Editor", "Viewer"].includes(selectedRole)) {
+                            setRole(selectedRole);
+                        }
+                    }}
+                >
                     <option value="Admin">Admin</option>
                     <option value="Editor">Editor</option>
                     <option value="Viewer">Viewer</option>
                 </select>
-                <br />
-                <br />
-            <button onClick={handleLogin} className='button-login'>Login</button>
-        </div>
+                <br /><br />
+
+                <button onClick={handleLogin} className='button-login'>Login</button>
+            </div>
         </div>
     );
 };
-
 
 export default Login;
