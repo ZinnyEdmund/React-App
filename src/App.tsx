@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext"; 
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -10,10 +10,9 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
 
 // Define the App component
-// The App component is the root component of the application. It sets up the routing configuration and renders the main application components.
 const App: React.FC = () => {
     return (
-        <AuthContext.Provider value={undefined}>
+        <AuthProvider>
             <Router>
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -22,27 +21,29 @@ const App: React.FC = () => {
                             <>
                                 <Navbar />
                                 <Dashboard />
-                            </> 
-                        </ProtectedRoute>} />
+                            </>
+                        </ProtectedRoute>} 
+                    />
                     <Route path="/profile" element={
                         <ProtectedRoute>
                             <>
                                 <Navbar />
                                 <Profile />
                             </>
-                        </ProtectedRoute>} />
+                        </ProtectedRoute>} 
+                    />
                     <Route path="/settings" element={
                         <AdminRoute>
                             <>
                                 <Navbar />
                                 <Settings />
                             </>
-                        </AdminRoute>} />
-                    <Route path="*" element={<Navigate to="/login" />} />
+                        </AdminRoute>} 
+                    />
                     <Route path="*" element={<Navigate to="/login" />} />
                 </Routes>
             </Router>
-            </AuthContext.Provider>
+        </AuthProvider>
     );
 };
 
