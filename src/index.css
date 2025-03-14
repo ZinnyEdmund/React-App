@@ -1,3 +1,4 @@
+/* General Body Styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -10,6 +11,7 @@ body {
   transition: background-color 0.5s ease-in-out;
 }
 
+/* Login Container */
 .login-container {
   background: white;
   padding: 30px;
@@ -20,6 +22,7 @@ body {
   animation: fade-in 0.8s ease-in-out;
 }
 
+/* Title */
 .login-title {
   font-size: 24px;
   color: #333;
@@ -27,6 +30,7 @@ body {
   animation: slideDown 0.6s ease-in-out;
 }
 
+/* Input Fields */
 .input-field {
   width: 100%;
   padding: 10px;
@@ -43,6 +47,7 @@ body {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Labels */
 .label {
   font-size: 14px;
   font-weight: bold;
@@ -52,6 +57,7 @@ body {
   margin-top: 10px;
 }
 
+/* Dropdown Select */
 select {
   width: 100%;
   padding: 10px;
@@ -61,6 +67,7 @@ select {
   background-color: white;
   font-size: 16px;
   cursor: pointer;
+  appearance: none;
 }
 
 select:focus {
@@ -69,6 +76,7 @@ select:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Login Button */
 .button-login {
   width: 100%;
   padding: 12px;
@@ -91,6 +99,58 @@ select:focus {
   animation: bounce 0.4s;
 }
 
+/* Navbar Styling */
+.navbar {
+  background: #007bff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  background: red;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: darkred;
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
+  .login-container {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+/* Animations */
 @keyframes fade-in {
   from {
     opacity: 0;
