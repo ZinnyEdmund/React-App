@@ -1,22 +1,30 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 // Define the Profile component
-// The Profile component displays the user's profile information.
 const Profile: React.FC = () => {
-    const { user } = useAuth();
+    const auth = useAuth();
 
-    // If the user is not logged in, display a message
-    if (!user) {
-        return <p>Please log in to view your profile.</p>;
+    // If auth context is not available
+    if (!auth) {
+        console.error("Profile must be used within an AuthProvider.");
+        return <Navigate to="/login" />;
     }
-    // Display the user's profile information
+
+    const { user } = auth;
+
+    // Redirect to login if not authenticated
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
+
     return (
         <div>
             <h1>Profile</h1>
-            <p>Username: {user.username}</p>
-            <p>Email: {user.email}</p>
-            <p>Role: {user.role}</p>
+            <p><strong>Username:</strong> {user.username}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Role:</strong> {user.role}</p>
         </div>
     );
 };
