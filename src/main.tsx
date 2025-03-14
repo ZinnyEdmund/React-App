@@ -1,14 +1,21 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./index.css";
 import { AuthProvider } from './context/AuthContext';
 
-// Create a root React element
-ReactDOM.       (document.getElementById('root')!).render(
-  <StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </StrictMode>
-);
+// Get the root element safely
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </StrictMode>
+  );
+} else {
+  console.error("Root element not found");
+}
