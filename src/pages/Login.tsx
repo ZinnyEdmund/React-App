@@ -14,7 +14,7 @@ const Login: React.FC = () => {
             alert("Please enter your username and email.");
             return;
         }
-        login({ username, email, role });
+        login({ username, email, role, isAuthenticated: true });
         navigate("/dashboard");
     };
 
@@ -28,6 +28,7 @@ const Login: React.FC = () => {
                     type="text" 
                     placeholder="Username" 
                     className='input-field' 
+                    required
                     value={username} 
                     onChange={(e) => setUsername(e.target.value)} 
                 />
@@ -38,13 +39,15 @@ const Login: React.FC = () => {
                     type="email" 
                     placeholder="Email" 
                     className='input-field' 
+                    required
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                 />
                 <br />
 
-                <label>Role:</label>
+                <label className='label'>Role:</label>
                 <select 
+                    className='input-field'
                     value={role} 
                     onChange={(e) => {
                         const selectedRole = e.target.value as "Admin" | "Editor" | "Viewer";
@@ -53,6 +56,7 @@ const Login: React.FC = () => {
                         }
                     }}
                 >
+                    <option value="" disabled>Select a role</option>
                     <option value="Admin">Admin</option>
                     <option value="Editor">Editor</option>
                     <option value="Viewer">Viewer</option>

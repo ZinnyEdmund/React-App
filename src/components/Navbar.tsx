@@ -1,25 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import React, { useState } from "react";
+import { Link } from "react-router-dom"
 
-const Navbar: React.FC = () => {
-    const { user, logout } = useAuth();
+interface User{
+    username: string;
+    role: string;
+    isAuthenticated: boolean;
+}
+interface NavbarProps{
+    user: User | null;
+    logout: () => void;
+}
 
+const Navbar: React.FC<NavbarProps> = ({ user, logout }) => {
+    const [dropdown, setDropdown] = useState(false);
     if (!user) return null;
 
     return (
-        <nav>
-            <span>Welcome, {user.username} ({user.email}) - ({user.role})</span>
-            <ul>
-                <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><Link to="/profile">Profile</Link></li>
-                {user.role === "Admin" && (
-                    <li><Link to="/settings">Settings</Link></li>
+        <nav className="navbar">
+            <div className="navbar-left">
+                {/* Display the user's name and role */}
+            <span>
+                <strong>Welcome back, {user.username} {user.role}</strong>
+            </span>
+            </div>
+            <div className="navbar-right">
+                <button className="dropdown-btn" onClick={() => setDropdown(!dropdown)}>Menu</button>
+                {dropdown && (
+                    <ul className="dropdown-menu">
+                        <li>
+                            <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                        <li>
+                            <Link to="/profile">Profile</Link>
+                        </li>
+                        <li>
+                            <Link to="/settings">Settings</Link>
+                        </li>
+                        <li>
+                            <button onClick={logout}>Logout</button>
+                        </li>
+                    </ul>
                 )}
-                <li><button onClick={logout}>Logout</button></li>
-            </ul>
+            </div>
         </nav>
     );
 };
 
-export default Navbar;
+export default Navbar;  
