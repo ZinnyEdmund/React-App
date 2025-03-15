@@ -2,7 +2,11 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const ProtectedRoute: React.FC = () => {
+interface ProtectedRouteProps {
+    children: React.ReactNode;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     const auth = useAuth();
 
     if (!auth) {
@@ -14,7 +18,7 @@ const ProtectedRoute: React.FC = () => {
         return <Navigate to="/login" />;
     }
 
-    return <Outlet />;  // This renders child routes dynamically
+    return <>{children}</>;
 };
 
 export default ProtectedRoute;
