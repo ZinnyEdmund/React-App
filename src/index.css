@@ -29,7 +29,7 @@ body {
   margin-bottom: 10px;
   animation: slideDown 0.6s ease-in-out;
 }
-.login-title{
+.login-title h1{
   font-size: 3rem;
 }
 
