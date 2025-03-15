@@ -1,42 +1,40 @@
-// import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type User = { username: string; email: string; role: "Admin" | "Editor" | "Viewer" } | null;
+// Define the user type if not already defined
+interface User {
+  username: string;
+  email: string;
+  role: string;
+}
 
-type AuthContextType = {
-    user: User;
-    isAuthenticated: boolean;
-    login: (user: User) => void; 
-    logout: () => void;
+// Define the auth context type
+interface AuthContextType {
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
+}
+
+// Create context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  const login = (userData: User) => setUser(userData);
+  const logout = () => setUser(null);
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-// Create the Authentication context
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Create the provider component
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-
-    const login = (user: User) => {
-        if (!user) throw new Error("Invalid user data");
-        setUser(user);
-    };
-
-    const logout = () => setUser(null);
-
-    return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+// Hook to use auth context
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
-
-// Custom hook for accessing the context
-export const useAuth = () => {
-    const context = React.useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider.");
-    }
-    return context;
-};
-
-export default AuthProvider;
