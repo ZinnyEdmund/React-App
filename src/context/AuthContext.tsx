@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type User = {
+interface User = {
   username: string;
   email: string;
   role: "Admin" | "Editor" | "Viewer";
   isAuthenticated: boolean;
 };
 
-type AuthContextType = {
+interface AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
   login: (user: User) => void;
